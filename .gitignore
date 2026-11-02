@@ -1,0 +1,15 @@
+# macOS clutter
+.DS_Store
+
+# Python cache files
+__pycache__/
+*.pyc
+
+# Virtual environments (later)
+.venv/
+
+# Secrets: never commit these
+.env
+
+# Personal/AI files
+CLAUDE.md
