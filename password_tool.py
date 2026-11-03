@@ -1,13 +1,14 @@
 # IMPORTS
 import secrets
 import string
+from getpass import getpass
 
 # CONSTANTS
 CHARACTERS = string.ascii_letters + string.digits + string.punctuation
 
+
 # FUNCTIONS
 def get_length():
-
     while True:
         try:
             length = int(input("How long should the password be? "))
@@ -31,7 +32,7 @@ def get_length():
 
 def generate_password(length):
     password = ""
-    for i in range(length):
+    for _ in range(length):
         password += secrets.choice(CHARACTERS)
     return password
 
@@ -64,7 +65,6 @@ def check_strength(password):
             has_digit = True
         elif char in string.punctuation:
             has_symbol = True
-            
 
     # Add points for flags
     if has_upper:
@@ -90,31 +90,33 @@ def check_strength(password):
     return rating, score
 
 
-def main(): 
+def main():
     while True:
         print("\n===Password Tool===")
         print("1. Generate a password")
         print("2. Check password strength")
         print("3. Quit")
 
-        choice = input("choose an option: ")
+        choice = input("Choose an option: ")
 
         if choice == "1":
             # Generate a password
             length = get_length()
             password = generate_password(length)
-            print(f"Password: {password}")
-        elif choice =="2":
-            # Check a password 
-            password = input("Enter a password to check: ")
             rating, score = check_strength(password)
-            print (f"Testing - Your Password is: {password}")
-            print (f"Rating: {rating}")
-            print (f"Score: {score}/7")
+            print(f"Password: {password}")
+            print(f"Rating: {rating} ({score}/7)")
+        elif choice == "2":
+            # Check a password
+            password = getpass("Enter a password to check: ")
+            rating, score = check_strength(password)
+            print(f"Rating: {rating}")
+            print(f"Score: {score}/7")
         elif choice == "3":
             print("Goodbye!")
-            break 
-        else: 
+            break
+        else:
             print("Invalid choice. Please choose from options 1, 2 or 3")
+
 
 main()
