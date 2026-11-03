@@ -13,3 +13,6 @@ __pycache__/
 
 # Personal/AI files
 CLAUDE.md
+
+# single function from strength checker
+scratch.py
