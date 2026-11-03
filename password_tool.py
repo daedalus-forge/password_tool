@@ -90,6 +90,13 @@ def check_strength(password):
     return rating, score
 
 
+def show_strength(password):
+    # get rating and score from check_strength
+    rating, score = check_strength(password)
+    # print them in one line like 'Rating: Strong (6/7)'
+    print(f"Rating: {rating} ({score}/7)")
+
+
 def main():
     while True:
         print("\n===Password Tool===")
@@ -103,15 +110,12 @@ def main():
             # Generate a password
             length = get_length()
             password = generate_password(length)
-            rating, score = check_strength(password)
             print(f"Password: {password}")
-            print(f"Rating: {rating} ({score}/7)")
+            show_strength(password)
         elif choice == "2":
             # Check a password
             password = getpass("Enter a password to check: ")
-            rating, score = check_strength(password)
-            print(f"Rating: {rating}")
-            print(f"Score: {score}/7")
+            show_strength(password)
         elif choice == "3":
             print("Goodbye!")
             break
