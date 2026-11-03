@@ -1,9 +1,11 @@
+# IMPORTS
 import secrets
 import string
 
-characters = string.ascii_letters + string.digits + string.punctuation
+# CONSTANTS
+CHARACTERS = string.ascii_letters + string.digits + string.punctuation
 
-
+# FUNCTIONS
 def get_length():
 
     while True:
@@ -30,10 +32,89 @@ def get_length():
 def generate_password(length):
     password = ""
     for i in range(length):
-        password += secrets.choice(characters)
+        password += secrets.choice(CHARACTERS)
     return password
 
 
-length = get_length()
-password = generate_password(length)
-print(f"Your {length}-character password is: {password}")
+def check_strength(password):
+    score = 0
+
+    # Length Checks
+    if len(password) >= 8:
+        score += 1
+
+    if len(password) >= 12:
+        score += 1
+
+    if len(password) >= 16:
+        score += 1
+
+    # Complexity Check
+    has_upper = False
+    has_lower = False
+    has_digit = False
+    has_symbol = False
+
+    for char in password:
+        if char.isupper():
+            has_upper = True
+        elif char.islower():
+            has_lower = True
+        elif char.isdigit():
+            has_digit = True
+        elif char in string.punctuation:
+            has_symbol = True
+            
+
+    # Add points for flags
+    if has_upper:
+        score += 1
+
+    if has_lower:
+        score += 1
+
+    if has_digit:
+        score += 1
+
+    if has_symbol:
+        score += 1
+
+    # Score = Rating
+    if score <= 3:
+        rating = "Weak"
+    elif score <= 5:
+        rating = "Moderate"
+    else:
+        rating = "Strong"
+
+    return rating, score
+
+
+def main(): 
+    while True:
+        print("\n===Password Tool===")
+        print("1. Generate a password")
+        print("2. Check password strength")
+        print("3. Quit")
+
+        choice = input("choose an option: ")
+
+        if choice == "1":
+            # Generate a password
+            length = get_length()
+            password = generate_password(length)
+            print(f"Password: {password}")
+        elif choice =="2":
+            # Check a password 
+            password = input("Enter a password to check: ")
+            rating, score = check_strength(password)
+            print (f"Testing - Your Password is: {password}")
+            print (f"Rating: {rating}")
+            print (f"Score: {score}/7")
+        elif choice == "3":
+            print("Goodbye!")
+            break 
+        else: 
+            print("Invalid choice. Please choose from options 1, 2 or 3")
+
+main()
