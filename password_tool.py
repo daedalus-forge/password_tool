@@ -92,12 +92,22 @@ def check_strength(password):
 
 def show_strength(password):
     # get rating and score from check_strength
-    rating, score = check_strength(password)
     # print them in one line like 'Rating: Strong (6/7)'
+    rating, score = check_strength(password)
     print(f"Rating: {rating} ({score}/7)")
 
 
+def load_common_passwords():
+    common_passwords = []
+    with open("common_passwords.txt") as file:
+        for line in file:
+            common_passwords.append(line.strip().lower())
+
+    return common_passwords
+
+
 def main():
+    common_passwords = load_common_passwords()
     while True:
         print("\n===Password Tool===")
         print("1. Generate a password")
